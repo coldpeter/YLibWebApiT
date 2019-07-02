@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Web;
@@ -20,7 +21,7 @@ namespace YLibWebApiT.Filters
             }
             else
             {
-                var user =  (ClaimsIdentity)HttpContext.Current.GetOwinContext()?.Authentication?.User?.Identity; ;
+                var user = AuthorizedUser.Current.User;
                 if (user == null)
                 {
                     //未验证（登录）的用户, 而且是非匿名访问，则转向登录页面  

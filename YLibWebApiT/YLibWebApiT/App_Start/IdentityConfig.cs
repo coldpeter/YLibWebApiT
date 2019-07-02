@@ -9,6 +9,7 @@ using System.Web;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using System;
+using Newtonsoft.Json;
 
 namespace YLibWebApiT
 {
@@ -82,7 +83,8 @@ namespace YLibWebApiT
                 var user = (ClaimsIdentity)HttpContext.Current.GetOwinContext()?.Authentication?.User?.Identity;
                 if (user == null) return null;
                 if (user.GetUserId().IsNullOrEmpty()) return null;
-                return user.FindFirstValue("SPS_User").JsonDeserialize<AccountModel>();
+                var data = user.FindFirstValue("USER");
+                return JsonConvert.DeserializeObject<ApplicationUser>(data);
             }
         }
         /// <summary>

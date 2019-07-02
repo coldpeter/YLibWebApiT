@@ -25,7 +25,7 @@ namespace YLibWebApiT
             // 将数据库上下文和用户管理器配置为对每个请求使用单个实例
             app.CreatePerOwinContext(ApplicationDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
-
+            app.CreatePerOwinContext<AuthorizedUser>(AuthorizedUser.Create);
             // 使应用程序可以使用 Cookie 来存储已登录用户的信息
             // 并使用 Cookie 来临时存储有关使用第三方登录提供程序登录的用户的信息
             app.UseCookieAuthentication(new CookieAuthenticationOptions());
@@ -39,6 +39,7 @@ namespace YLibWebApiT
                 Provider = new ApplicationOAuthProvider(PublicClientId),
                 AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
+                
                 //在生产模式下设 AllowInsecureHttp = false
                 AllowInsecureHttp = true
             };

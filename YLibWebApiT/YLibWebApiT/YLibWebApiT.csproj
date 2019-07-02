@@ -116,6 +116,10 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="XTLib.Extension, Version=4.0.0.0, Culture=neutral, PublicKeyToken=51455941366537e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\XTLib.Extension.4.0.3.515\lib\net40\XTLib.Extension.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="EntityFramework">
