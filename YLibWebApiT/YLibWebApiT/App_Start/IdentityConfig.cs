@@ -4,6 +4,11 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using YLibWebApiT.Models;
+using System.Security.Claims;
+using System.Web;
+using Microsoft.Owin.Security.Cookies;
+using Microsoft.Owin.Security.OAuth;
+using System;
 
 namespace YLibWebApiT
 {
@@ -58,6 +63,81 @@ namespace YLibWebApiT
             else
                 return null;
           //  return base.FindAsync(userName, password);
+        }
+    }
+
+    class AuthorizedUser : IDisposable
+    {
+        private AuthorizedUser()
+        {
+        }
+
+        /// <summary>
+        /// 当前登录用户
+        /// </summary>
+        public ApplicationUser User
+        {
+            get
+            {
+                var user = (ClaimsIdentity)HttpContext.Current.GetOwinContext()?.Authentication?.User?.Identity;
+                if (user == null) return null;
+                if (user.GetUserId().IsNullOrEmpty()) return null;
+                return user.FindFirstValue("SPS_User").JsonDeserialize<AccountModel>();
+            }
+        }
+        /// <summary>
+        /// 客户端ID
+        /// </summary>
+        public String ClientId
+        {
+            get
+            {
+                var context = HttpContext.Current?.GetOwinContext();
+                if (context == null)
+                    return null;
+
+
+                var user = (ClaimsIdentity)context?.Authentication?.User?.Identity;
+                if (user != null)
+                    return user.FindFirstValue("SPS_Client");
+
+                var clietId = context?.Get<string>("as:client_id");
+                return clietId;
+
+            }
+        }
+        //private static AuthorizedUser _current = null;
+        public static AuthorizedUser Current
+        {
+            get
+            {
+                //通过用户登录标识，获取用户跟权限有关的对象
+                //var user = (new AuthoirzedUserManager()).GetByUserName();
+                return HttpContext.Current.GetOwinContext()?.Get<AuthorizedUser>();// _current ?? (_current = new AuthorizedUser());
+            }
+        }
+
+        public static AuthorizedUser Create()
+        {
+            return new AuthorizedUser();
+        }
+        /// <summary>
+        /// 退出系统
+        /// </summary>
+        public static void LoginOut()
+        {
+            var auth = HttpContext.Current.GetOwinContext()?.Authentication;
+            if (auth == null) return;
+            auth.SignOut(CookieAuthenticationDefaults.AuthenticationType);
+            auth.SignOut(OAuthDefaults.AuthenticationType);
+            //HttpContext.Current.GetOwinContext().Authentication.SignOut(OAuthAuthorizationOptions.AuthenticationType);
+        }
+
+
+        public void Dispose()
+        {
+
+
         }
     }
 }

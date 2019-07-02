@@ -10,6 +10,7 @@ using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using YLibWebApiT.Models;
+using Newtonsoft.Json;
 
 namespace YLibWebApiT.Providers
 {
@@ -39,15 +40,21 @@ namespace YLibWebApiT.Providers
                 return;
             }
 
-            ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(userManager,
-               OAuthDefaults.AuthenticationType);
-            ClaimsIdentity cookiesIdentity = await user.GenerateUserIdentityAsync(userManager,
-                CookieAuthenticationDefaults.AuthenticationType);
+            //ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(userManager,
+            //   OAuthDefaults.AuthenticationType);
+          //  ClaimsIdentity cookiesIdentity = await user.GenerateUserIdentityAsync(userManager,
+          //      CookieAuthenticationDefaults.AuthenticationType);
+
+            ClaimsIdentity oAuthIdentity = new ClaimsIdentity(context.Options.AuthenticationType);
+            oAuthIdentity.AddClaim(new Claim(ClaimsIdentity.DefaultNameClaimType, user.UserName));
+            oAuthIdentity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id));
+            oAuthIdentity.AddClaim(new Claim("USER", JsonConvert.SerializeObject(user)));
 
             AuthenticationProperties properties = CreateProperties(user.UserName);
             AuthenticationTicket ticket = new AuthenticationTicket(oAuthIdentity, properties);
             context.Validated(ticket);
-            context.Request.Context.Authentication.SignIn(cookiesIdentity);
+            context.Request.Context.Authentication.SignIn(oAuthIdentity);
+            
         }
 
         public override Task TokenEndpoint(OAuthTokenEndpointContext context)
