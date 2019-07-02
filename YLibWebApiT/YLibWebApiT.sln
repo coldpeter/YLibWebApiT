@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29020.237
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YLibWebApiT", "YLibWebApiT\YLibWebApiT.csproj", "{B4540596-7A63-408B-A75D-34EA2CC9598E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YLibWebApiT.Tests", "YLibWebApiT.Tests\YLibWebApiT.Tests.csproj", "{D7A945F3-7A60-4992-BAE5-9E7AD7AFFE61}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B4540596-7A63-408B-A75D-34EA2CC9598E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4540596-7A63-408B-A75D-34EA2CC9598E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4540596-7A63-408B-A75D-34EA2CC9598E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4540596-7A63-408B-A75D-34EA2CC9598E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7A945F3-7A60-4992-BAE5-9E7AD7AFFE61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7A945F3-7A60-4992-BAE5-9E7AD7AFFE61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7A945F3-7A60-4992-BAE5-9E7AD7AFFE61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7A945F3-7A60-4992-BAE5-9E7AD7AFFE61}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B27FD282-770D-40BF-AC7F-C635C1377B72}
+	EndGlobalSection
+EndGlobal
