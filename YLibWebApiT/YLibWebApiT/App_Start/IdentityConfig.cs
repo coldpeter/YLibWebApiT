@@ -41,5 +41,23 @@ namespace YLibWebApiT
             }
             return manager;
         }
+
+        public override Task<ApplicationUser> FindAsync(string userName, string password)
+        {
+            //测试
+            if (userName == "admin" && password == "admin")
+            {
+                var user = new ApplicationUser()
+                {
+                    UserName = "admin",
+                    Id = "1",
+                };
+                return Task.FromResult<ApplicationUser>(user);
+
+            }
+            else
+                return null;
+          //  return base.FindAsync(userName, password);
+        }
     }
 }
